@@ -1,0 +1,18 @@
+language: php
+
+php:
+  - 5.5
+  - hhvm
+
+
+before_script:
+  - composer require doctrine/dbal:${DOCTRINE_VERSION} --no-update
+  - composer install --dev --prefer-source
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq tesseract-ocr tesseract-ocr-nld
+
+script: phpunit
+
+matrix:
+  allow_failures:
+    - php: hhvm
