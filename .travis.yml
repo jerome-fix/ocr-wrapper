@@ -6,7 +6,7 @@ php:
 
 
 before_script:
-  - composer require doctrine/dbal:${DOCTRINE_VERSION} --no-update
+  - composer  selfupdate
   - composer install --dev --prefer-source
   - sudo apt-get update -qq
   - sudo apt-get install -qq tesseract-ocr tesseract-ocr-nld
