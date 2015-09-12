@@ -4,6 +4,7 @@ namespace Jfx\Ocr;
 
 class Tesseract extends BaseOcr
 {
+    const PAGE_SEG_MODE_NONE = null;
     const PAGE_SEG_MODE_OSD = 0;
     const PAGE_SEG_MODE_AUTOMATIC_OSD = 1;
     const PAGE_SEG_MODE_AUTOMATIC = 2;
@@ -120,9 +121,12 @@ class Tesseract extends BaseOcr
     protected $languages = ['eng'];
 
     /**
+     * Set Tesseract to only run a subset of layout analysis and assume a
+     * certain form of image.
+     *
      * @var int
      */
-    protected $psm = null;
+    protected $pageSegMode = self::PAGE_SEG_MODE_NONE;
 
     /**
      * Restricted list of characters known by the OCR.
@@ -153,12 +157,14 @@ class Tesseract extends BaseOcr
             $arguments[]  = implode('+', $this->getLanguages());
         }
 
-        if (!empty($this->getPsm())) {
+        if (!is_null($this->getPageSegMode())) {
             $arguments[]  = '-psm';
-            $arguments[]  = $this->getPsm();
+            $arguments[]  = $this->getPageSegMode();
         }
 
         $arguments[]  = 'stdout';
+
+        $arguments[]  = 'quiet';
 
         $this->generateConfigFile();
         if ($this->getConfigFile()) {
@@ -217,28 +223,37 @@ class Tesseract extends BaseOcr
      */
     protected function generateConfigFile()
     {
+        $content = [];
         if ($this->whitelist) {
+            $content[] = sprintf('tessedit_char_whitelist %s', $this->whitelist);
+        }
+
+        if ( !empty($content)) {
             $this->configFile = $this->generateTmpFile('conf');
-            $content = sprintf('tessedit_char_whitelist %s', $this->whitelist);
-            file_put_contents($this->configFile, $content);
+            file_put_contents($this->configFile, implode("\n", $content));
         }
     }
 
     /**
+     * @return int
      */
-    public function getPsm()
+    public function getPageSegMode()
     {
-        return $this->psm;
+        return $this->pageSegMode;
     }
 
     /**
-     * @param null $psm
+     * @param int $pageSegMode
      *
      * @return Tesseract
      */
-    public function setPsm($psm)
+    public function setPageSegMode($pageSegMode)
     {
-        $this->psm = $psm;
+        if ($pageSegMode < 0 || $pageSegMode > 10) {
+            throw new \InvalidArgumentException('Page seg mode must be between 0 and 10');
+        }
+
+        $this->pageSegMode = $pageSegMode;
 
         return $this;
     }

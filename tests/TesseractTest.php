@@ -52,11 +52,11 @@ class TesseractTest extends \PHPUnit_Framework_TestCase
         $ocr = new Tesseract();
         $ocr->setFile($file);
 
-        $expectedCmd = sprintf("'tesseract' '%s' '-l' '%s' 'stdout'", $file->getPathname(), 'eng');
+        $expectedCmd = sprintf("'tesseract' '%s' '-l' '%s' 'stdout' 'quiet'", $file->getPathname(), 'eng');
         $this->assertEquals($expectedCmd, $ocr->buildCommand());
 
         $ocr->setLanguages(['fra']);
-        $expectedCmd = sprintf("'tesseract' '%s' '-l' '%s' 'stdout'", $file->getPathname(), 'fra');
+        $expectedCmd = sprintf("'tesseract' '%s' '-l' '%s' 'stdout' 'quiet'", $file->getPathname(), 'fra');
         $this->assertEquals($expectedCmd, $ocr->buildCommand());
     }
 
@@ -87,7 +87,7 @@ class TesseractTest extends \PHPUnit_Framework_TestCase
         $ocr->setFile($file);
 
         $ocr->setWhitelist(range('A', 'Z'));
-        $expectedValue = 'tessedit_char_whitelist ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $expectedValue = "tessedit_char_whitelist ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         $ocr->buildCommand();
         $this->assertEquals($expectedValue, file_get_contents($ocr->getConfigFile()));
     }
@@ -103,7 +103,7 @@ class TesseractTest extends \PHPUnit_Framework_TestCase
         $ocr->setWhitelist(range(0, 9));
 
         $cmd = $ocr->buildCommand();
-        $expectedCmd = sprintf("'tesseract' '%s' '-l' '%s' 'stdout' 'nobatch' '%s'", $file->getPathname(), 'eng', $ocr->getConfigFile());
+        $expectedCmd = sprintf("'tesseract' '%s' '-l' '%s' 'stdout' 'quiet' 'nobatch' '%s'", $file->getPathname(), 'eng', $ocr->getConfigFile());
         $this->assertEquals($expectedCmd, $cmd);
 
         $ocr->setWhitelist(range(0, 9));
@@ -111,5 +111,15 @@ class TesseractTest extends \PHPUnit_Framework_TestCase
 
         $ocr->setWhitelist(range('A', 'Z'));
         $this->assertNotEquals('617', $ocr->scan());
+    }
+
+    public function testPageSegModeOutOfRange()
+    {
+        $this->setExpectedException('\\InvalidArgumentException');
+        $ocr = new Tesseract();
+        $ocr->setPageSegMode(10);
+
+        $ocr = new Tesseract();
+        $ocr->setPageSegMode(-1);
     }
 }

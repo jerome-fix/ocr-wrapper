@@ -23,7 +23,7 @@ abstract class BaseOcr implements OcrInterface
      *
      * @var int
      */
-    protected $timeout = 600;
+    protected $timeout = self::DEFAULT_TIMEOUT;
 
     /**
      * External binary to execute : tessaract, gocr,….
@@ -37,8 +37,14 @@ abstract class BaseOcr implements OcrInterface
      */
     protected $languages = [];
 
+    /**
+     * @var string
+     */
     protected $tmpDir = null;
 
+    /**
+     * @var array
+     */
     protected $tmpFiles = [];
 
     /**

@@ -9,7 +9,7 @@ before_script:
   - composer  selfupdate
   - composer install --dev --prefer-source
   - sudo apt-get update -qq
-  - sudo apt-get install -qq tesseract-ocr tesseract-ocr-nld
+  - sudo apt-get install -qq tesseract-ocr tesseract-ocr-fra  tesseract-ocr-deu tesseract-ocr-eng tesseract-ocr-osd
 
 script: phpunit
 

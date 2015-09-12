@@ -13,6 +13,7 @@ namespace Jfx\ocr\tests;
 require __DIR__ . '/bootstrap.php';
 
 use Jfx\Ocr\BaseOcr;
+use Jfx\Ocr\OcrInterface;
 
 class FakeOcr extends BaseOcr
 {
@@ -25,8 +26,21 @@ class FakeOcr extends BaseOcr
     }
 }
 
-class BaseOcrTest extends \PHPUnit_Framework_TestCase // \PHPUnit_Framework_TestCase
+class BaseOcrTest extends \PHPUnit_Framework_TestCase
 {
+    public function testSetterGetter()
+    {
+        $ocr = new FakeOcr();
+        $this->assertEquals(OcrInterface::DEFAULT_TIMEOUT, $ocr->getTimeout());
+
+        $ocr->setTimeout(10);
+        $this->assertEquals(10, $ocr->getTimeout());
+
+        $this->assertEquals(null, $ocr->getBinary());
+        $ocr->setBinary('fake_binary');
+        $this->assertEquals('fake_binary', $ocr->getBinary());
+    }
+
     public function testLanguage()
     {
         $ocr = new FakeOcr();
@@ -46,18 +60,16 @@ class BaseOcrTest extends \PHPUnit_Framework_TestCase // \PHPUnit_Framework_Test
     public function testSetTmpDir()
     {
         $ocr = new FakeOcr();
-        @mkdir( sys_get_temp_dir() . DIRECTORY_SEPARATOR .'abc');
-        $ocr->setTmpDir( sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'abc');
-        $this->assertEquals(sys_get_temp_dir() .'/abc' . DIRECTORY_SEPARATOR, $ocr->getTmpDir());
-        @unlink( sys_get_temp_dir() . DIRECTORY_SEPARATOR .'abc');
-
+        @mkdir(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'abc');
+        $ocr->setTmpDir(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'abc');
+        $this->assertEquals(sys_get_temp_dir() . '/abc' . DIRECTORY_SEPARATOR, $ocr->getTmpDir());
+        @unlink(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'abc');
     }
 
     public function testSetTmpDirByDefault()
     {
         $ocr = new FakeOcr();
-       $this->assertEquals(sys_get_temp_dir() . DIRECTORY_SEPARATOR, $ocr->getTmpDir());
-
+        $this->assertEquals(sys_get_temp_dir() . DIRECTORY_SEPARATOR, $ocr->getTmpDir());
     }
 
     public function testDirectoryNotFoundExceptionGetTmpDir()

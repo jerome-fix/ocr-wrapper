@@ -4,6 +4,8 @@ namespace Jfx\Ocr;
 
 interface OcrInterface
 {
+    const DEFAULT_TIMEOUT = 600;
+
     /**
      * Generate the command to execute.
      *
