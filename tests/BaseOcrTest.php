@@ -1,19 +1,19 @@
 <?php
 
 /**
- * This file is part of the Jfx project.
+ * This file is part of the Zapoyok project.
  *
  * (c) Jérôme Fix <jerome.fix@zapoyok.info>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Jfx\ocr\tests;
+namespace Zapoyok\ocr\tests;
 
 require __DIR__ . '/bootstrap.php';
 
-use Jfx\Ocr\BaseOcr;
-use Jfx\Ocr\OcrInterface;
+use Zapoyok\Ocr\BaseOcr;
+use Zapoyok\Ocr\OcrInterface;
 
 class FakeOcr extends BaseOcr
 {
@@ -74,7 +74,7 @@ class BaseOcrTest extends \PHPUnit_Framework_TestCase
 
     public function testDirectoryNotFoundExceptionGetTmpDir()
     {
-        $this->setExpectedException('Jfx\\Ocr\\Exception\\DirectoryNotFoundException');
+        $this->setExpectedException('Zapoyok\\Ocr\\Exception\\DirectoryNotFoundException');
         $ocr = new FakeOcr();
         $ocr->setTmpDir('bogus_dir/abc');
     }

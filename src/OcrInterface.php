@@ -1,6 +1,6 @@
 <?php
 
-namespace Jfx\Ocr;
+namespace Zapoyok\Ocr;
 
 interface OcrInterface
 {
@@ -81,7 +81,7 @@ interface OcrInterface
     /**
      * @param $dir
      *
-     * @throws \Jfx\Ocr\Exception\DirectoryNotFoundException
+     * @throws \Zapoyok\Ocr\Exception\DirectoryNotFoundException
      *
      * @return $this
      */

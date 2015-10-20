@@ -1,6 +1,6 @@
 <?php
 
-namespace Jfx\Ocr;
+namespace Zapoyok\Ocr;
 
 class Tesseract extends BaseOcr
 {

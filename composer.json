@@ -1,5 +1,5 @@
 {
-    "name": "jerome-fix/ocr-wrapper",
+    "name": "zapoyok/ocr-wrapper",
     "type": "library",
     "version": "0.1.0",
     "description": "A wrapper to work with OCR like Tesseract, Gocr,…",
@@ -20,6 +20,6 @@
         "phpunit/phpunit": "~4.0"
     },
     "autoload": {
-        "psr-4": { "Jfx\\Ocr\\": "src/" }
+        "psr-4": { "Zapoyok\\Ocr\\": "src/" }
     }
 }

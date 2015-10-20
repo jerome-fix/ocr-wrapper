@@ -1,9 +1,9 @@
 <?php
 
-namespace Jfx\Ocr;
+namespace Zapoyok\Ocr;
 
-use Jfx\Ocr\Exception\CommandException;
-use Jfx\Ocr\Exception\DirectoryNotFoundException;
+use Zapoyok\Ocr\Exception\CommandException;
+use Zapoyok\Ocr\Exception\DirectoryNotFoundException;
 use Symfony\Component\Process\ProcessBuilder;
 
 abstract class BaseOcr implements OcrInterface
@@ -221,7 +221,7 @@ abstract class BaseOcr implements OcrInterface
     /**
      * @param $dir
      *
-     * @throws \Jfx\Ocr\Exception\DirectoryNotFoundException
+     * @throws \Zapoyok\Ocr\Exception\DirectoryNotFoundException
      *
      * @return $this
      */
